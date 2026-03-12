@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<!-- saved from url=(0233)file:///Users/philipparker/Library/Application%20Support/Claude/local-agent-mode-sessions/14f24087-0d2f-401c-90ff-a382ae08c680/88467e57-20ba-4c2d-88dc-687d4eefda25/local_2df3f742-55f1-4ebe-a4ae-92777bb32395/outputs/puppy-bracket.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐾 Puppy Name Bracket</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #fdf8f0;
+  --white: #ffffff;
+  --green: #4e7a3c;
+  --green-light: #e6f2de;
+  --green-dark: #3a5f2c;
+  --orange: #d97b3a;
+  --orange-light: #fdebd8;
+  --brown: #2d2010;
+  --gray: #8a7a6a;
+  --border: #e0d4c0;
+  --shadow: 0 4px 20px rgba(45,32,16,0.08);
+}
+
+body {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  background: var(--bg);
+  min-height: 100vh;
+  color: var(--brown);
+}
+
+#app {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen {
+  width: 100%;
+  text-align: center;
+  animation: fadeUp 0.4s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Typography ── */
+.emoji-hero { font-size: 5rem; display: block; margin-bottom: 10px; line-height: 1; }
+h1 { font-size: 2.4rem; color: var(--green); margin-bottom: 8px; }
+h2 { font-size: 1.75rem; color: var(--green); margin-bottom: 6px; }
+.lead {
+  font-size: 1.05rem; color: var(--gray);
+  line-height: 1.65; margin-bottom: 22px;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-block; padding: 14px 34px; border-radius: 999px; border: none;
+  font-size: 1.05rem; font-family: inherit; cursor: pointer; transition: all 0.2s;
+}
+.btn-primary  { background: var(--green);  color: white; }
+.btn-primary:hover  { background: var(--green-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(78,122,60,0.35); }
+.btn-secondary { background: var(--orange); color: white; }
+.btn-secondary:hover { background: #bf6828; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(217,123,58,0.35); }
+
+/* ── Intro ── */
+.names-cloud {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  justify-content: center; margin: 18px 0 26px;
+}
+.name-tag {
+  background: var(--white); border: 1.5px solid var(--border);
+  padding: 5px 13px; border-radius: 999px;
+  font-size: 0.875rem; color: var(--gray);
+}
+
+/* ── Match screen ── */
+.round-info {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; margin-bottom: 8px; flex-wrap: wrap;
+}
+.badge {
+  background: var(--orange); color: white;
+  padding: 4px 15px; border-radius: 999px;
+  font-size: 0.85rem; font-weight: bold; letter-spacing: 0.2px;
+}
+.match-info { font-size: 0.85rem; color: var(--gray); }
+
+.progress-track {
+  height: 7px; background: var(--border);
+  border-radius: 999px; margin: 10px 0 26px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--orange));
+  border-radius: 999px; transition: width 0.45s ease;
+}
+
+.question { font-size: 1.1rem; color: var(--gray); margin-bottom: 22px; }
+
+.matchup {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px; align-items: center;
+}
+.name-btn {
+  background: var(--white);
+  border: 2.5px solid var(--border);
+  border-radius: 22px;
+  padding: 50px 20px;
+  font-size: 1.65rem;
+  font-family: inherit;
+  font-weight: bold;
+  color: var(--brown);
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+  min-height: 150px;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; line-height: 1.25;
+  box-shadow: var(--shadow);
+}
+.name-btn:hover:not(:disabled) {
+  border-color: var(--green); background: var(--green-light);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(78,122,60,0.22);
+}
+.name-btn:disabled { cursor: default; }
+.name-btn.selected {
+  border-color: var(--green); background: var(--green-light);
+  color: var(--green); transform: scale(1.04);
+  box-shadow: 0 8px 30px rgba(78,122,60,0.28);
+}
+.name-btn.rejected {
+  border-color: #ddd; background: #f6f3ef;
+  color: #ccc; text-decoration: line-through; transform: scale(0.96);
+  box-shadow: none;
+}
+.vs-label { font-size: 1.4rem; font-weight: bold; color: var(--orange); }
+
+.bye-note { margin-top: 18px; font-size: 0.82rem; color: var(--gray); }
+
+/* ── Round end ── */
+.stats-row {
+  display: flex; gap: 14px; justify-content: center;
+  margin: 18px 0; flex-wrap: wrap;
+}
+.stat-box {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 14px; padding: 16px 22px; min-width: 100px;
+}
+.stat-box .num { font-size: 2rem; font-weight: bold; color: var(--green); }
+.stat-box .lbl { font-size: 0.78rem; color: var(--gray); margin-top: 2px; }
+
+.card-section {
+  text-align: left; margin: 12px 0;
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 16px; padding: 16px;
+}
+.section-title {
+  font-size: 0.78rem; font-weight: bold; letter-spacing: 0.5px;
+  text-transform: uppercase; color: var(--gray); margin-bottom: 10px;
+}
+.chip-grid { display: flex; flex-wrap: wrap; gap: 7px; }
+.chip { padding: 5px 13px; border-radius: 999px; font-size: 0.85rem; }
+.chip.alive  { background: var(--green-light); color: var(--green); border: 1px solid #b8d8a4; }
+.chip.dead   { background: #f0ece6; color: #b0a090; text-decoration: line-through; }
+
+/* ── Winner ── */
+.trophy {
+  font-size: 6rem; display: block; line-height: 1; margin-bottom: 12px;
+  animation: trophyPop 0.7s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes trophyPop {
+  from { transform: scale(0) rotate(-20deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0); opacity: 1; }
+}
+.champion-card {
+  background: var(--white); border: 3px solid var(--green);
+  border-radius: 24px; padding: 34px 28px; margin: 22px 0;
+  box-shadow: 0 10px 40px rgba(78,122,60,0.22);
+  animation: fadeUp 0.5s 0.35s ease both;
+}
+.champion-name {
+  font-size: 3.6rem; font-weight: bold; color: var(--green); line-height: 1;
+  animation: nameBounce 0.6s 0.6s ease both;
+}
+@keyframes nameBounce {
+  0%   { transform: scale(0.8); opacity: 0; }
+  60%  { transform: scale(1.08); }
+  100% { transform: scale(1);   opacity: 1; }
+}
+.champion-sub { font-size: 0.95rem; color: var(--gray); margin-top: 10px; }
+.btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 4px; }
+
+/* ── Confetti ── */
+#confetti {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 999; display: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 500px) {
+  h1 { font-size: 1.9rem; }
+  .name-btn { font-size: 1.3rem; padding: 36px 14px; min-height: 120px; }
+  .matchup { gap: 10px; }
+  .champion-name { font-size: 2.8rem; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+    <div class="screen">
+      <span class="emoji-hero">🐾</span>
+      <h1>Puppy Name Bracket</h1>
+      <p class="lead">
+        44 names enter. One becomes legend.<br>
+        Vote head-to-head to crown the perfect name for your new pup!
+      </p>
+      <div class="names-cloud">
+        <span class="name-tag">Juniper</span><span class="name-tag">Wren</span><span class="name-tag">Moss</span><span class="name-tag">Maple</span><span class="name-tag">Willow</span><span class="name-tag">Aster</span><span class="name-tag">Solstice</span><span class="name-tag">Rune</span><span class="name-tag">Sable</span><span class="name-tag">Mistral</span><span class="name-tag">Amaranth</span><span class="name-tag">Widget</span><span class="name-tag">Pebbles</span><span class="name-tag">Niblet</span><span class="name-tag">Goose</span><span class="name-tag">Ducky</span><span class="name-tag">Sprocket</span><span class="name-tag">Nudel</span><span class="name-tag">Bug</span><span class="name-tag">Blue</span><span class="name-tag">Agatha</span><span class="name-tag">Babette</span><span class="name-tag">Georgette</span><span class="name-tag">Henrietta</span><span class="name-tag">Mabel</span><span class="name-tag">Winona</span><span class="name-tag">Tilda</span><span class="name-tag">Bonnie</span><span class="name-tag">Portia</span><span class="name-tag">Theodora</span><span class="name-tag">Bundle</span><span class="name-tag">Artemis</span><span class="name-tag">Freya</span><span class="name-tag">Demetria</span><span class="name-tag">Salem</span><span class="name-tag">Agrippa</span><span class="name-tag">Puck</span><span class="name-tag">Jinx</span><span class="name-tag">Nova</span><span class="name-tag">Piper</span><span class="name-tag">Roxy</span><span class="name-tag">Pepper</span><span class="name-tag">Bryn</span><span class="name-tag">Fallon</span>
+      </div>
+      <button class="btn btn-primary" onclick="startTournament()">🎲 Shuffle &amp; Start!</button>
+    </div>
+  </div>
+<canvas id="confetti" width="1440" height="754" style="display: none;"></canvas>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════
+const NAMES = [
+  'Juniper','Wren','Moss','Maple','Willow','Aster','Solstice','Rune',
+  'Sable','Mistral','Amaranth','Widget','Pebbles','Niblet','Goose','Ducky',
+  'Sprocket','Nudel','Bug','Blue','Agatha','Babette','Georgette','Henrietta',
+  'Mabel','Winona','Tilda','Bonnie','Portia','Theodora','Bundle','Artemis',
+  'Freya','Demetria','Salem','Agrippa','Puck','Jinx','Nova','Piper',
+  'Roxy','Pepper','Bryn','Fallon'
+];
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let S = {
+  screen: 'intro',
+  roundNum: 1,
+  realMatches: [],
+  autoWinners: [],
+  matchIdx: 0,
+  roundWinners: [],    // accumulates this round (starts with auto-winners)
+  eliminated: [],      // eliminated THIS round
+  allEliminated: [],   // all eliminated so far (all rounds)
+  champion: null
+};
+
+// ═══════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Split players into real head-to-head matches + auto-winners (bye)
+function buildRound(players) {
+  const shuffled = shuffle([...players]);
+  if (shuffled.length % 2 === 1) shuffled.push(null); // pad odd
+
+  const real = [], auto = [];
+  for (let i = 0; i < shuffled.length; i += 2) {
+    const a = shuffled[i], b = shuffled[i + 1];
+    if      (b === null) auto.push(a);
+    else if (a === null) auto.push(b);
+    else                 real.push([a, b]);
+  }
+  return { real, auto };
+}
+
+// ═══════════════════════════════════════════════════════
+// ACTIONS
+// ═══════════════════════════════════════════════════════
+function startTournament() {
+  const { real, auto } = buildRound(NAMES);
+  S = {
+    screen: 'match',
+    roundNum: 1,
+    realMatches: real,
+    autoWinners: auto,
+    matchIdx: 0,
+    roundWinners: [...auto],
+    eliminated: [],
+    allEliminated: [],
+    champion: null
+  };
+  render();
+}
+
+let voting = false;
+function vote(choice) {
+  if (voting) return;
+  const match = S.realMatches[S.matchIdx];
+  if (!match) return;
+
+  voting = true;
+  const winner = choice === 0 ? match[0] : match[1];
+  const loser  = choice === 0 ? match[1] : match[0];
+
+  // Visual feedback
+  const cards = document.querySelectorAll('.name-btn');
+  cards[0].disabled = cards[1].disabled = true;
+  cards[choice].classList.add('selected');
+  cards[1 - choice].classList.add('rejected');
+
+  setTimeout(() => {
+    voting = false;
+    S.roundWinners.push(winner);
+    S.eliminated.push(loser);
+    S.allEliminated.push(loser);
+    S.matchIdx++;
+
+    if (S.matchIdx >= S.realMatches.length) {
+      // Round is over
+      if (S.roundWinners.length === 1) {
+        S.champion = S.roundWinners[0];
+        S.screen = 'winner';
+      } else {
+        S.screen = 'roundend';
+      }
+    }
+    render();
+  }, 660);
+}
+
+function nextRound() {
+  const prevAllElim = [...S.allEliminated];
+  const { real, auto } = buildRound(S.roundWinners);
+  S = {
+    screen: 'match',
+    roundNum: S.roundNum + 1,
+    realMatches: real,
+    autoWinners: auto,
+    matchIdx: 0,
+    roundWinners: [...auto],
+    eliminated: [],
+    allEliminated: prevAllElim,
+    champion: null
+  };
+  render();
+}
+
+function goIntro() {
+  S.screen = 'intro';
+  render();
+}
+
+// ═══════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════
+const app = document.getElementById('app');
+
+function render() {
+  switch (S.screen) {
+    case 'intro':    renderIntro();    break;
+    case 'match':    renderMatch();    break;
+    case 'roundend': renderRoundEnd(); break;
+    case 'winner':   renderWinner();   break;
+  }
+}
+
+function renderIntro() {
+  app.innerHTML = `
+    <div class="screen">
+      <span class="emoji-hero">🐾</span>
+      <h1>Puppy Name Bracket</h1>
+      <p class="lead">
+        44 names enter. One becomes legend.<br>
+        Vote head-to-head to crown the perfect name for your new pup!
+      </p>
+      <div class="names-cloud">
+        ${NAMES.map(n => `<span class="name-tag">${n}</span>`).join('')}
+      </div>
+      <button class="btn btn-primary" onclick="startTournament()">🎲 Shuffle &amp; Start!</button>
+    </div>
+  `;
+}
+
+function renderMatch() {
+  const { realMatches, matchIdx, roundNum, autoWinners } = S;
+  const match = realMatches[matchIdx];
+  const total = realMatches.length;
+  const progress = total > 0 ? (matchIdx / total) * 100 : 0;
+  const remaining = NAMES.length - S.allEliminated.length;
+
+  app.innerHTML = `
+    <div class="screen">
+      <div class="round-info">
+        <span class="badge">Round ${roundNum}</span>
+        <span class="match-info">Match ${matchIdx + 1} of ${total} &nbsp;·&nbsp; ${remaining} names left</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width: ${progress}%"></div>
+      </div>
+      <p class="question">Which name do you prefer? 🐶</p>
+      <div class="matchup">
+        <button class="name-btn" onclick="vote(0)">${match[0]}</button>
+        <div class="vs-label">VS</div>
+        <button class="name-btn" onclick="vote(1)">${match[1]}</button>
+      </div>
+      ${autoWinners.length > 0
+        ? `<p class="bye-note">🎟️ ${autoWinners.map(n=>`<strong>${n}</strong>`).join(', ')} advance${autoWinners.length===1?'s':''} with a bye this round</p>`
+        : ''}
+    </div>
+  `;
+}
+
+function renderRoundEnd() {
+  const survivors = S.roundWinners;
+  const elim = S.eliminated;
+  const nextRoundNum = S.roundNum + 1;
+
+  app.innerHTML = `
+    <div class="screen">
+      <span class="emoji-hero">🌿</span>
+      <h2>Round ${S.roundNum} Complete!</h2>
+      <p class="lead">${survivors.length} names are still in the running.</p>
+
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="num">${survivors.length}</div>
+          <div class="lbl">Advancing</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">${elim.length}</div>
+          <div class="lbl">Eliminated</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">${S.allEliminated.length}</div>
+          <div class="lbl">Total Out</div>
+        </div>
+      </div>
+
+      <div class="card-section">
+        <div class="section-title">✅ Still in it</div>
+        <div class="chip-grid">
+          ${survivors.map(n => `<span class="chip alive">${n}</span>`).join('')}
+        </div>
+      </div>
+
+      <div class="card-section">
+        <div class="section-title">❌ Eliminated this round</div>
+        <div class="chip-grid">
+          ${elim.map(n => `<span class="chip dead">${n}</span>`).join('')}
+        </div>
+      </div>
+
+      <br>
+      <button class="btn btn-primary" onclick="nextRound()">
+        Continue to Round ${nextRoundNum} →
+      </button>
+    </div>
+  `;
+}
+
+function renderWinner() {
+  app.innerHTML = `
+    <div class="screen">
+      <span class="trophy">🏆</span>
+      <p class="lead" style="margin-bottom:6px">
+        After ${S.roundNum} rounds of fierce competition, your puppy's name is…
+      </p>
+      <div class="champion-card">
+        <div class="champion-name">${S.champion}</div>
+        <div class="champion-sub">🐶 Champion of the Puppy Name Bracket</div>
+      </div>
+      <p class="lead">Congratulations! We can't wait to meet little ${S.champion}. 🥳</p>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="startTournament()">🔄 Run it again</button>
+        <button class="btn btn-primary" onclick="goIntro()">← Back to start</button>
+      </div>
+    </div>
+  `;
+  launchConfetti();
+}
+
+// ═══════════════════════════════════════════════════════
+// CONFETTI
+// ═══════════════════════════════════════════════════════
+function launchConfetti() {
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+  canvas.style.display = 'block';
+
+  const COLORS = ['#4e7a3c','#d97b3a','#e8c840','#3a7ad9','#d93a7a','#3ad99a','#c87ae0'];
+  const pieces = Array.from({ length: 160 }, () => ({
+    x:    Math.random() * canvas.width,
+    y:    -20 - Math.random() * 120,
+    w:    7  + Math.random() * 11,
+    h:    4  + Math.random() * 6,
+    color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    vx:   (Math.random() - 0.5) * 4,
+    vy:   2 + Math.random() * 4,
+    rot:  Math.random() * 360,
+    rotV: (Math.random() - 0.5) * 7,
+    alpha: 1
+  }));
+
+  let frame = 0;
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let any = false;
+    pieces.forEach(p => {
+      p.x   += p.vx;
+      p.y   += p.vy;
+      p.vy  += 0.06; // gravity
+      p.rot += p.rotV;
+      if (frame > 90) p.alpha = Math.max(0, p.alpha - 0.009);
+      if (p.alpha > 0) any = true;
+
+      ctx.save();
+      ctx.globalAlpha = p.alpha;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    if (any) requestAnimationFrame(tick);
+    else canvas.style.display = 'none';
+  }
+  tick();
+}
+
+// ═══════════════════════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════════════════════
+render();
+</script>
+
+
+</body></html>
