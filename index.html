@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0233)file:///Users/philipparker/Library/Application%20Support/Claude/local-agent-mode-sessions/14f24087-0d2f-401c-90ff-a382ae08c680/88467e57-20ba-4c2d-88dc-687d4eefda25/local_2df3f742-55f1-4ebe-a4ae-92777bb32395/outputs/puppy-bracket.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="en">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🐾 Puppy Name Bracket</title>
 <style>
@@ -215,21 +215,8 @@ h2 { font-size: 1.75rem; color: var(--green); margin-bottom: 6px; }
 </style>
 </head>
 <body>
-<div id="app">
-    <div class="screen">
-      <span class="emoji-hero">🐾</span>
-      <h1>Puppy Name Bracket</h1>
-      <p class="lead">
-        44 names enter. One becomes legend.<br>
-        Vote head-to-head to crown the perfect name for your new pup!
-      </p>
-      <div class="names-cloud">
-        <span class="name-tag">Juniper</span><span class="name-tag">Wren</span><span class="name-tag">Moss</span><span class="name-tag">Maple</span><span class="name-tag">Willow</span><span class="name-tag">Aster</span><span class="name-tag">Solstice</span><span class="name-tag">Rune</span><span class="name-tag">Sable</span><span class="name-tag">Mistral</span><span class="name-tag">Amaranth</span><span class="name-tag">Widget</span><span class="name-tag">Pebbles</span><span class="name-tag">Niblet</span><span class="name-tag">Goose</span><span class="name-tag">Ducky</span><span class="name-tag">Sprocket</span><span class="name-tag">Nudel</span><span class="name-tag">Bug</span><span class="name-tag">Blue</span><span class="name-tag">Agatha</span><span class="name-tag">Babette</span><span class="name-tag">Georgette</span><span class="name-tag">Henrietta</span><span class="name-tag">Mabel</span><span class="name-tag">Winona</span><span class="name-tag">Tilda</span><span class="name-tag">Bonnie</span><span class="name-tag">Portia</span><span class="name-tag">Theodora</span><span class="name-tag">Bundle</span><span class="name-tag">Artemis</span><span class="name-tag">Freya</span><span class="name-tag">Demetria</span><span class="name-tag">Salem</span><span class="name-tag">Agrippa</span><span class="name-tag">Puck</span><span class="name-tag">Jinx</span><span class="name-tag">Nova</span><span class="name-tag">Piper</span><span class="name-tag">Roxy</span><span class="name-tag">Pepper</span><span class="name-tag">Bryn</span><span class="name-tag">Fallon</span>
-      </div>
-      <button class="btn btn-primary" onclick="startTournament()">🎲 Shuffle &amp; Start!</button>
-    </div>
-  </div>
-<canvas id="confetti" width="1440" height="754" style="display: none;"></canvas>
+<div id="app"></div>
+<canvas id="confetti"></canvas>
 
 <script>
 // ═══════════════════════════════════════════════════════
@@ -241,7 +228,7 @@ const NAMES = [
   'Sprocket','Nudel','Bug','Blue','Agatha','Babette','Georgette','Henrietta',
   'Mabel','Winona','Tilda','Bonnie','Portia','Theodora','Bundle','Artemis',
   'Freya','Demetria','Salem','Agrippa','Puck','Jinx','Nova','Piper',
-  'Roxy','Pepper','Bryn','Fallon'
+  'Roxy','Pepper','Bryn','Fallon','Cricket'
 ];
 
 // ═══════════════════════════════════════════════════════
@@ -383,7 +370,7 @@ function renderIntro() {
       <span class="emoji-hero">🐾</span>
       <h1>Puppy Name Bracket</h1>
       <p class="lead">
-        44 names enter. One becomes legend.<br>
+        45 names enter. One becomes legend.<br>
         Vote head-to-head to crown the perfect name for your new pup!
       </p>
       <div class="names-cloud">
@@ -548,6 +535,5 @@ function launchConfetti() {
 // ═══════════════════════════════════════════════════════
 render();
 </script>
-
-
-</body></html>
+</body>
+</html>
